@@ -109,7 +109,51 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
             qrCodeFrameView?.frame = barCodeObject!.bounds
             
             if metadataObj.stringValue != nil {
-                messageLabel.text = metadataObj.stringValue
+                
+                captureSession?.stopRunning()
+                
+                messageLabel.text = "Enviando..."
+                
+                // API - Post to send code qr string
+                var request = URLRequest(url: URL(string: "http://192.168.0.26:5000/check/status")!)
+                request.httpMethod = "POST"
+                
+                let postString = "code_qr=" + metadataObj.stringValue
+                
+                request.httpBody = postString.data(using: .utf8)
+                
+                let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                    guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                        print("error=\(error)")
+                        return
+                    }
+                    
+                    self.messageLabel.text = "Esperando..."
+                    
+                    if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                        //messageLabel.text = metadataObj.stringValue
+                        
+                        print("El Código QR No es válido")
+
+                        self.messageLabel.text = "El Código QR No es válido"
+                    
+                    } else {
+                        let responseString = String(data: data, encoding: .utf8)
+                        print("responseString = \(responseString)")
+                        
+                        // Evaluate response
+                        
+                        //messageLabel.text = metadataObj.stringValue
+                        self.messageLabel.text = "OK - ¡Asistencia Marcada!"
+                    }
+
+                    self.captureSession?.startRunning()
+                
+                    
+                }
+                task.resume()
+                
+                
             }
         }
     }
