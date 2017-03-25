@@ -115,7 +115,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 messageLabel.text = "Enviando..."
                 
                 // API - Post to send code qr string
-                var request = URLRequest(url: URL(string: "http://192.168.0.26:5000/check/status")!)
+                var request = URLRequest(url: URL(string: "http://104.236.194.15:5000/check/status")!)
                 request.httpMethod = "POST"
                 
                 let postString = "code_qr=" + metadataObj.stringValue
@@ -137,15 +137,15 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
 
                         self.messageLabel.text = "El Código QR No es válido"
                     
-                    } else {
-                        let responseString = String(data: data, encoding: .utf8)
-                        print("responseString = \(responseString)")
-                        
-                        // Evaluate response
-                        
-                        //messageLabel.text = metadataObj.stringValue
-                        self.messageLabel.text = "OK - ¡Asistencia Marcada!"
                     }
+                    
+                    let responseString = String(data: data, encoding: .utf8)
+                    print("responseString = \(responseString)")
+                        
+                    // Evaluate response
+                        
+                    //messageLabel.text = metadataObj.stringValue
+                    self.messageLabel.text = "OK - ¡Asistencia Marcada!"
 
                     self.captureSession?.startRunning()
                 
