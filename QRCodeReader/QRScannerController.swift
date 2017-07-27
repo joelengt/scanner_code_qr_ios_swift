@@ -115,7 +115,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 messageLabel.text = "Enviando..."
                 
                 // API - Post to send code qr string
-                var request = URLRequest(url: URL(string: "http://104.236.194.15:5000/check/status")!)
+                var request = URLRequest(url: URL(string: "http://138.197.121.244:3000/api/assistance/check-qr")!)
                 request.httpMethod = "POST"
                 
                 let postString = "codeQR=" + metadataObj.stringValue
