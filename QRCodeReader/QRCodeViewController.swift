@@ -29,4 +29,6 @@ class QRCodeViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
 
+    @IBAction func EventClick(_ sender: Any, forEvent event: UIEvent) {
+    }
 }

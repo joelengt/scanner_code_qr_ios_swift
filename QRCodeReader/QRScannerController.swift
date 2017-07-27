@@ -118,7 +118,7 @@ class QRScannerController: UIViewController, AVCaptureMetadataOutputObjectsDeleg
                 var request = URLRequest(url: URL(string: "http://104.236.194.15:5000/check/status")!)
                 request.httpMethod = "POST"
                 
-                let postString = "code_qr=" + metadataObj.stringValue
+                let postString = "codeQR=" + metadataObj.stringValue
                 
                 request.httpBody = postString.data(using: .utf8)
                 
